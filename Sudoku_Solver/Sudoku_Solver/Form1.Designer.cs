@@ -34,6 +34,7 @@
             this.button_Solve = new System.Windows.Forms.Button();
             this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
             this.button_Clear = new System.Windows.Forms.Button();
+            this.button_Clear_Invalid_Cells = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
@@ -95,11 +96,13 @@
             // flowLayoutPanel2
             // 
             this.flowLayoutPanel2.Controls.Add(this.button_Clear);
+            this.flowLayoutPanel2.Controls.Add(this.button_Clear_Invalid_Cells);
             this.flowLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel2.Location = new System.Drawing.Point(3, 603);
             this.flowLayoutPanel2.Name = "flowLayoutPanel2";
             this.flowLayoutPanel2.Size = new System.Drawing.Size(594, 39);
             this.flowLayoutPanel2.TabIndex = 2;
+            this.flowLayoutPanel2.Click += new System.EventHandler(this.ClearInvalidCells);
             // 
             // button_Clear
             // 
@@ -110,6 +113,17 @@
             this.button_Clear.Text = "Clear";
             this.button_Clear.UseVisualStyleBackColor = true;
             this.button_Clear.Click += new System.EventHandler(this.ClearSudoku);
+            // 
+            // button_Clear_Invalid_Cells
+            // 
+            this.button_Clear_Invalid_Cells.AutoSize = true;
+            this.button_Clear_Invalid_Cells.Location = new System.Drawing.Point(117, 3);
+            this.button_Clear_Invalid_Cells.Name = "button_Clear_Invalid_Cells";
+            this.button_Clear_Invalid_Cells.Size = new System.Drawing.Size(108, 25);
+            this.button_Clear_Invalid_Cells.TabIndex = 1;
+            this.button_Clear_Invalid_Cells.Text = "Clear invalid cells";
+            this.button_Clear_Invalid_Cells.UseVisualStyleBackColor = true;
+            this.button_Clear_Invalid_Cells.Click += new System.EventHandler(this.ClearInvalidCells);
             // 
             // Form1
             // 
@@ -122,6 +136,7 @@
             this.tableLayoutPanel1.ResumeLayout(false);
             this.flowLayoutPanel1.ResumeLayout(false);
             this.flowLayoutPanel2.ResumeLayout(false);
+            this.flowLayoutPanel2.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -134,6 +149,7 @@
         private System.Windows.Forms.Button button_Solve;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel2;
         private System.Windows.Forms.Button button_Clear;
+        private System.Windows.Forms.Button button_Clear_Invalid_Cells;
     }
 }
 

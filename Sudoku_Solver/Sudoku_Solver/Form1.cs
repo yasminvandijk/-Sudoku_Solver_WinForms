@@ -182,5 +182,17 @@ namespace Sudoku_Solver
                 MessageBox.Show($"No solution found.");
             }
         }
+
+        private void ClearInvalidCells(object sender, EventArgs e)
+        {
+            List<RichTextBox> invalidCells = invalidRichtextBoxes.ToList();
+
+            invalidCells.ForEach(richTextBox =>
+            {
+                richTextBox.Text = string.Empty;
+            });
+
+            invalidRichtextBoxes.Clear();
+        }
     }
 }
