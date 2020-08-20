@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -114,7 +115,42 @@ namespace Sudoku_Solver
 
         private void SolveSudoku(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            Sudoku sudoku = new Sudoku();
+
+            for (int x = 0; x < 9; x++)
+            {
+                for (int y = 0; y < 9; y++)
+                {
+                    sudoku.SetValue(x, y, sudokuValues[x, y]);
+                }
+            }
+
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
+
+            bool solved = sudoku.Solve();
+
+            stopwatch.Stop();
+
+            if (solved)
+            {
+                MessageBox.Show($"Solution found in {stopwatch.ElapsedMilliseconds} milliseconds.");
+
+                for (int x = 0; x < 9; x++)
+                {
+                    for (int y = 0; y < 9; y++)
+                    {
+                        sudokuValues[x, y] = sudoku.GetValue(x, y);
+
+                        richTextBoxes[x, y].Text = sudoku.GetValue(x, y).ToString();
+                        richTextBoxes[x, y].BackColor = Color.White;
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show($"No solution found.");
+            }
         }
     }
 }
