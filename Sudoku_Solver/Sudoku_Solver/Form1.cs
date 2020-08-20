@@ -12,6 +12,10 @@ namespace Sudoku_Solver
 {
     public partial class Form1 : Form
     {
+        private readonly int[,] sudokuValues = new int[9, 9];
+
+        private readonly RichTextBox[,] richTextBoxes = new RichTextBox[9, 9];
+        
         public Form1()
         {
             InitializeComponent();
@@ -54,6 +58,8 @@ namespace Sudoku_Solver
                     int column = 3 * (blockNr % 3) + (i % 3);
 
                     richTextBox.TextChanged += (sender, e) => UpdateCellValue(richTextBox, row, column);
+
+                    richTextBoxes[row, column] = richTextBox;
                 }
 
                 tableLayoutPanel_sudoku.Controls.Add(tableLayoutPanel);
@@ -62,8 +68,53 @@ namespace Sudoku_Solver
 
         private void UpdateCellValue(RichTextBox richTextBox, int row, int column)
         {
-            //
-            MessageBox.Show($"{richTextBox.Text} {row} {column}");
+            if (row < 0 || row > 8 || column < 0 || column > 8)
+            {
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(richTextBox.Text))
+            {
+                richTextBox.BackColor = Color.White;
+
+                sudokuValues[row, column] = 0;
+            }
+            else
+            {
+                bool validInput = int.TryParse(richTextBox.Text, out int number);
+
+                if (validInput && number >= 1 && number <= 9)
+                {
+                    richTextBox.BackColor = Color.White;
+
+                    sudokuValues[row, column] = number;
+                }
+                else
+                {
+                    richTextBox.BackColor = Color.OrangeRed;
+
+                    sudokuValues[row, column] = 0;
+                }
+            }
+        }
+
+        private void ClearSudoku(object sender, EventArgs e)
+        {
+            for (int x = 0; x < 9; x++)
+            {
+                for (int y = 0; y < 9; y++)
+                {
+                    sudokuValues[x, y] = 0;
+
+                    richTextBoxes[x, y].Text = string.Empty;
+                    richTextBoxes[x, y].BackColor = Color.White;
+                }
+            }
+        }
+
+        private void SolveSudoku(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
         }
     }
 }
