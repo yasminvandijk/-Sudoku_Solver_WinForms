@@ -16,6 +16,8 @@ namespace Sudoku_Solver
         private readonly int[,] sudokuValues = new int[9, 9];
 
         private readonly RichTextBox[,] richTextBoxes = new RichTextBox[9, 9];
+
+        private readonly List<RichTextBox> invalidRichtextBoxes = new List<RichTextBox>();
         
         public Form1()
         {
@@ -79,6 +81,11 @@ namespace Sudoku_Solver
                 richTextBox.BackColor = Color.White;
 
                 sudokuValues[row, column] = 0;
+
+                if (invalidRichtextBoxes.Contains(richTextBox))
+                {
+                    invalidRichtextBoxes.Remove(richTextBox);
+                }
             }
             else
             {
@@ -89,12 +96,22 @@ namespace Sudoku_Solver
                     richTextBox.BackColor = Color.White;
 
                     sudokuValues[row, column] = number;
+
+                    if (invalidRichtextBoxes.Contains(richTextBox))
+                    {
+                        invalidRichtextBoxes.Remove(richTextBox);
+                    }
                 }
                 else
                 {
                     richTextBox.BackColor = Color.OrangeRed;
 
                     sudokuValues[row, column] = 0;
+
+                    if (!invalidRichtextBoxes.Contains(richTextBox))
+                    {
+                        invalidRichtextBoxes.Add(richTextBox);
+                    }
                 }
             }
         }
@@ -111,10 +128,23 @@ namespace Sudoku_Solver
                     richTextBoxes[x, y].BackColor = Color.White;
                 }
             }
+
+            invalidRichtextBoxes.Clear();
         }
 
         private void SolveSudoku(object sender, EventArgs e)
         {
+            if (invalidRichtextBoxes.Count > 0)
+            {
+                MessageBox.Show(
+                    $"The sudoku contains {invalidRichtextBoxes.Count} invalid value(s). " +
+                    $"Enter valid values or clear invalid values and try again.",
+                    "Error"
+                    );
+
+                return;
+            }
+            
             Sudoku sudoku = new Sudoku();
 
             for (int x = 0; x < 9; x++)
